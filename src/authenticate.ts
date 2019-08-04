@@ -14,7 +14,6 @@ export async function authenticate(
 ): Promise<true> {
   try {
     const tokenPayload = await jwt.verify(token, this.secret);
-    console.log(tokenPayload);
     await this.knex.transaction(async trx => {
       const tokenResult = await trx<AuthToken>(AuthToken)
         .select("id")
