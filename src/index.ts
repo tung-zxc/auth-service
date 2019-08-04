@@ -1,5 +1,6 @@
 import Knex from "knex";
 import { register, RegisterParams } from "./register";
+import { login, LoginParams } from "./login";
 
 interface ServiceOptions {
   knex: Knex;
@@ -21,4 +22,6 @@ export class AuthService {
   register: (
     params: RegisterParams
   ) => ReturnType<typeof register> = register.bind(this);
+
+  login: (params: LoginParams) => ReturnType<typeof login> = login.bind(this);
 }

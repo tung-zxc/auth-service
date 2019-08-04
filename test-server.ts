@@ -28,5 +28,16 @@ app.get("/register", async (req, res) => {
   }
 });
 
+app.get("/login", async (req, res) => {
+  const { username, password } = req.query;
+  try {
+    const result = await authService.login({ username, password });
+    res.send(JSON.stringify(result));
+  } catch {
+    res.status(500);
+    res.send("error");
+  }
+});
+
 // eslint-disable-next-line no-console
 app.listen(3000, () => console.log("test server started at port 3000"));
