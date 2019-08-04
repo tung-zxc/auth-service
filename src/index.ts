@@ -2,6 +2,7 @@ import Knex from "knex";
 import { register, RegisterParams } from "./register";
 import { login, LoginParams } from "./login";
 import { authenticate, AuthenticateParams } from "./authenticate";
+import { logout, LogoutParams } from "./logout";
 import { ErrorCodes } from "./errors";
 
 interface ServiceOptions {
@@ -38,6 +39,10 @@ export class AuthService {
   authenticate: (
     params: AuthenticateParams
   ) => ReturnType<typeof authenticate> = authenticate.bind(this);
+
+  logout: (params: LogoutParams) => ReturnType<typeof logout> = logout.bind(
+    this
+  );
 }
 
 export { ErrorCodes };
