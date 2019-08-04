@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2015", "es2017", "dom"],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}
