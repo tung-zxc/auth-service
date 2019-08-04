@@ -9,9 +9,7 @@ const knex = Knex({
   searchPath: [SCHEMA_NAME, "public"]
 });
 
-// @ts-ignore
-// eslint-disable-next-line
-const authService = new AuthService(knex);
+const authService = new AuthService({ knex, secret: "secret" });
 
 const app = express();
 
@@ -19,5 +17,16 @@ app.get("/", (_req, res) => {
   res.send("ping");
 });
 
+app.get("/register", async (req, res) => {
+  const { username, password } = req.query;
+  try {
+    const user = await authService.register({ username, password });
+    res.send(JSON.stringify(user));
+  } catch {
+    res.status(500);
+    res.send("error");
+  }
+});
+
 // eslint-disable-next-line no-console
-app.listen(8080, () => console.log("test server started at port 8080"));
+app.listen(3000, () => console.log("test server started at port 3000"));
