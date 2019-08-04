@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 import uuid from "uuid";
-import jwt from "jsonwebtoken";
+import * as jwt from "./jwt";
 import { AuthService } from ".";
 import { AuthUser, AuthToken } from "./tables";
+import { TokenPayload } from "./types";
 import { UnknownError } from "./errors";
 
 export interface LoginParams {
@@ -28,15 +29,13 @@ export async function login(
     if (!authResult) throw new Error();
     const tokenId = uuid.v4();
     const now = new Date();
-    const token = await jwt.sign(
-      {
-        tokenId: tokenId,
-        userId: user.id,
-        username: user.username,
-        signDate: now.toISOString()
-      },
-      this.secret
-    );
+    const tokenPayload: TokenPayload = {
+      tokenId: tokenId,
+      userId: user.id,
+      username: user.username,
+      signDate: now.toISOString()
+    };
+    const token = await jwt.sign(tokenPayload, this.secret);
     await this.knex.transaction(async trx => {
       return trx<AuthToken>(AuthToken).insert({
         id: tokenId,
