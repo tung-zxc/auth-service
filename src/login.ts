@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import uuid from "uuid";
 import jwt from "jsonwebtoken";
 import { AuthService } from ".";
-import { AuthUser } from "./tables";
+import { AuthUser, AuthToken } from "./tables";
 import { UnknownError } from "./errors";
 
 export interface LoginParams {
@@ -37,6 +37,13 @@ export async function login(
       },
       this.secret
     );
+    await this.knex.transaction(async trx => {
+      return trx<AuthToken>(AuthToken).insert({
+        id: tokenId,
+        userId: user.id,
+        sign_date: now
+      });
+    });
     return token;
   } catch {
     throw UnknownError();

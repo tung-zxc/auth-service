@@ -6,7 +6,10 @@ exports.up = async function(knex) {
   await knex.schema
     .withSchema(SCHEMA_NAME)
     .createTable("_auth_user", function(table) {
-      table.text("id").notNullable();
+      table
+        .text("id")
+        .notNullable()
+        .unique();
       table
         .text("username")
         .notNullable()
