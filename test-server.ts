@@ -33,7 +33,8 @@ app.get("/login", async (req, res) => {
   try {
     const result = await authService.login({ username, password });
     res.send(JSON.stringify(result));
-  } catch {
+  } catch (e) {
+    console.log(e);
     res.status(500);
     res.send("error");
   }
@@ -44,7 +45,8 @@ app.get("/auth", async (req, res) => {
   try {
     const result = await authService.authenticate({ userId, token });
     res.send(JSON.stringify(result));
-  } catch {
+  } catch (e) {
+    console.log(e);
     res.status(500);
     res.send("error");
   }

@@ -4,7 +4,7 @@ import * as jwt from "./jwt";
 import { AuthService } from ".";
 import { AuthUser, AuthToken } from "./tables";
 import { TokenPayload } from "./types";
-import { UnknownError } from "./errors";
+import { AuthenticationError, AuthServiceError, UnknownError } from "./errors";
 
 export interface LoginParams {
   username: string;
@@ -21,12 +21,12 @@ export async function login(
         .select(["id", "password", "username"])
         .where("username", username)
         .limit(1);
-      if (userResult.length !== 1) throw new Error();
+      if (userResult.length !== 1) throw AuthenticationError();
       const user = userResult[0];
       return user;
     });
     const authResult = await bcrypt.compare(password, user.password);
-    if (!authResult) throw new Error();
+    if (!authResult) throw AuthenticationError();
     const tokenId = uuid.v4();
     const now = new Date();
     const tokenPayload: TokenPayload = {
@@ -44,7 +44,8 @@ export async function login(
       });
     });
     return token;
-  } catch {
+  } catch (e) {
+    if (e instanceof AuthServiceError) throw e;
     throw UnknownError();
   }
 }

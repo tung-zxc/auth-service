@@ -1,8 +1,13 @@
 import { AuthServiceError } from "./AuthServiceError";
-import { UnknownError, UnknownErrorCode } from "./UnknownError";
 
 export const ErrorCodes = {
-  UnknownError: UnknownErrorCode
+  UnknownError: 0,
+  AuthenticationError: 1
 };
 
-export { AuthServiceError, UnknownError };
+export const UnknownError = () =>
+  new AuthServiceError(ErrorCodes.UnknownError, "Unknown Error");
+export const AuthenticationError = () =>
+  new AuthServiceError(ErrorCodes.AuthenticationError, "Authentication Error");
+
+export { AuthServiceError };
