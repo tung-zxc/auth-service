@@ -7,7 +7,7 @@ export async function sign(
   payload: TokenPayload,
   secret: string
 ): Promise<string> {
-  return jwt.sign(payload, secret);
+  return jwt.sign(payload, secret, { noTimestamp: true });
 }
 
 export async function verify(

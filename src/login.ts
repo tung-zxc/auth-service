@@ -30,10 +30,7 @@ export async function login(
     const tokenId = uuid.v4();
     const now = new Date();
     const tokenPayload: TokenPayload = {
-      tokenId: tokenId,
-      userId: user.id,
-      username: user.username,
-      iat: +now
+      tokenId: tokenId
     };
     const token = await jwt.sign(tokenPayload, this.secret);
     await this.knex.transaction(async trx => {
