@@ -41,9 +41,9 @@ app.get("/login", async (req, res) => {
 });
 
 app.get("/auth", async (req, res) => {
-  const { userId, token } = req.query;
+  const { username, token } = req.query;
   try {
-    const result = await authService.authenticate({ userId, token });
+    const result = await authService.authenticate({ username, token });
     res.send(JSON.stringify(result));
   } catch (e) {
     console.log(e);
