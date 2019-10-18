@@ -15,7 +15,7 @@ exports.up = async function(knex) {
         .notNullable()
         .unique();
       table.text("password").notNullable();
-      table.primary(["id", "username"]);
+      table.primary(["id"]);
     });
 };
 
